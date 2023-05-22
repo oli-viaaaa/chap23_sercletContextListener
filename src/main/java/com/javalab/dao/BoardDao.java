@@ -25,10 +25,15 @@ public class BoardDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	private static DataSource dataSource;	
-	private static BoardDao instance;
+	// 기존 static 부분 제거
+	private DataSource dataSource;
 	
-	private BoardDao() {
+	// 주석처리
+	// private static BoardDao instance;
+	
+	// private으로 막혀있던 접근제한을 public 으로 전환
+	public BoardDao() {
+		/*
 		System.out.println("여기는 BoardDao 생성자");
 		try {
 			Context ctx = new InitialContext();
@@ -37,14 +42,22 @@ public class BoardDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
 	}	
 	
 	// 싱글톤 팬턴으로 생성
+	/*
 	public static BoardDao getInstance() {
 		if (instance == null)
 			instance = new BoardDao();
 		return instance;
 	}
+	*/
+	
+	// [추가 메소드]컨텍스트 로더 리스너에서 호출되면서 dataSource를 넣어줌.
+	public void setDataSource(DataSource dataSource) {
+	    this.dataSource = dataSource;
+	 }		
 	
 	// 게시물 목록 조회 메소드
 	public ArrayList<BoardVo> getBoardList() {

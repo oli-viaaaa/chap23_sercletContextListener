@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +18,7 @@ import com.javalab.vo.BoardVo;
 public class BoardListServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private BoardDao boardDao = BoardDao.getInstance();
+	// private BoardDao boardDao = BoardDao.getInstance();
        
     public BoardListServlet() {
         super();
@@ -32,6 +33,11 @@ public class BoardListServlet extends HttpServlet {
 		// 게시물 목록을 보여줄 jsp 페이지
 		// 톰캣 내부에서 접근하기 때문에 컨텍스트 패스 필요 없음
 		String url = "/boardList.jsp";
+		
+		// 서블릿 컨텍스트 얻기(어플리케이션에서 사용하는 종합정보함)
+		ServletContext sc = this.getServletContext();
+		// 서블릿 컨텍스트에서 BoardDao 객체 얻기
+		BoardDao boardDao = (BoardDao)sc.getAttribute("boardDao");
 		
 		// 회원 목록 조회
 		ArrayList<BoardVo> boardList = boardDao.getBoardList();
